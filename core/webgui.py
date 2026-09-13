@@ -3340,9 +3340,9 @@ function Start(){
           window.alert("You need to enter a source for dorking...");
           return
          }else{
+          exclude_engines=document.getElementById("exclude_engines").value
           if (document.getElementById("all_engines").checked){
           document.getElementById("all_engines").value = "on";
-          exclude_engines=document.getElementById("exclude_engines").value
           } else {
           document.getElementById("all_engines").value = "off";
           }
@@ -4824,21 +4824,18 @@ function runCommandX(cmd,params) {
             if pGet["dork_list"] == "on": # search using dork list (file: dorks.txt)
                 if pGet["all_engines"] == "on": # search using all search engines (and exclude those set by the user)
                     if pGet["exclude_engines"]:
-                        runcmd = "("+python_version+" -i ufonet --sd 'botnet/dorks.txt' --sa '"+pGet["exclude_engines"]+"' " + cmd_options + "|tee /tmp/out) &"
+                        runcmd = "("+python_version+" -i ufonet --sd 'botnet/dorks.txt' --sa --sax '"+pGet["exclude_engines"]+"' " + cmd_options + "|tee /tmp/out) &"
                     else:
                         runcmd = "("+python_version+" -i ufonet --sd 'botnet/dorks.txt' --sa " + cmd_options + "|tee /tmp/out) &"
                 else: # search using a search engine
                     runcmd = "("+python_version+" -i ufonet --sd 'botnet/dorks.txt' --se '"+pGet["s_engine"]+"' " + cmd_options + "|tee /tmp/out) &"
             else: # search using a pattern
                 if pGet["autosearch"] == "on": # search using auto-search mod
-                    if pGet["exclude_engines"]:
-                        runcmd = "("+python_version+" -i ufonet --auto-search '"+pGet["exclude_engines"]+"' " + cmd_options + "|tee /tmp/out) &"
-                    else:
-                        runcmd = "("+python_version+" -i ufonet --auto-search " + cmd_options + "|tee /tmp/out) &"
+                    runcmd = "("+python_version+" -i ufonet --auto-search " + cmd_options + "|tee /tmp/out) &"
                 else:
                     if pGet["all_engines"] == "on": # search using all search engines
                         if pGet["exclude_engines"]:
-                            runcmd = "("+python_version+" -i ufonet -s '"+pGet["dork"]+"' --sa '"+pGet["exclude_engines"]+"' " + cmd_options + "|tee /tmp/out) &"
+                            runcmd = "("+python_version+" -i ufonet -s '"+pGet["dork"]+"' --sa --sax '"+pGet["exclude_engines"]+"' " + cmd_options + "|tee /tmp/out) &"
                         else:
                             runcmd = "("+python_version+" -i ufonet -s '"+pGet["dork"]+"' --sa " + cmd_options + "|tee /tmp/out) &"
                     else: # search using a search engine
